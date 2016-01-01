@@ -20,9 +20,9 @@ type Config struct {
 	Room string `json:"room`
 }
 
-func Post() {
+func Post(msgFileName string) {
 	conf := readConf()
-	message := pickMessage()
+	message := pickMessage(msgFileName)
 
 	postErr := HttpPost(
 		conf.Room,
@@ -71,8 +71,8 @@ func readConf() Config {
 	return conf
 }
 
-func readMessages() []string {
-	messageStr, fileErr := ioutil.ReadFile("messages.json")
+func readMessages(msgFileName string) []string {
+	messageStr, fileErr := ioutil.ReadFile(msgFileName)
 	if fileErr != nil {
 		fmt.Println(os.Stderr, "File Open Error: ", fileErr)
 	}
@@ -86,8 +86,8 @@ func readMessages() []string {
 	return messages
 }
 
-func pickMessage() string {
-	messages := readMessages()
+func pickMessage(msgFileName string) string {
+	messages := readMessages(msgFileName)
 	rand.Seed(time.Now().UnixNano())
 	return messages[rand.Intn(len(messages) -1)]
 }
