@@ -20,9 +20,9 @@ type Config struct {
 	Room string `json:"room`
 }
 
-func Post(msgFileName string) {
-	conf := readConf()
+func Post(msgFileName, confFileName string) {
 	message := pickMessage(msgFileName)
+	conf := readConf(confFileName)
 
 	postErr := HttpPost(
 		conf.Room,
@@ -56,8 +56,8 @@ func HttpPost(room, token, msg string) error {
 	return clientErr
 }
 
-func readConf() Config {
-	confStr, fileErr := ioutil.ReadFile("conf.json")
+func readConf(confFileName string) Config {
+	confStr, fileErr := ioutil.ReadFile(confFileName)
 	if fileErr != nil {
 		fmt.Println(os.Stderr, "File Open Error: ", fileErr)
 	}
