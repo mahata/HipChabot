@@ -76,8 +76,5 @@ func main() {
 		return
 	}
 
-	fmt.Println("MSG:", msg, "ROOM:", conf.Room, "TOKEN:", conf.Token)
-	return
-
 	hipchat.Post(conf.Room, conf.Token, msg)
 }
